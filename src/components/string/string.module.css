@@ -1,0 +1,18 @@
+.main {
+  margin: auto;
+  display: flex;
+  max-width: 522px;
+  margin-bottom: 120px;
+}
+
+.mr {
+margin-right: 12px;
+}
+
+.letters {
+  max-width: 1040px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  gap: 16px
+}
