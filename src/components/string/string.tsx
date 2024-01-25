@@ -4,10 +4,10 @@ import styles from './string.module.css';
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
-import { ElementStates } from "../../types/element-states";
 import { useForm } from "../../hooks/useForm";
 import { sleep, swap } from "../../utils/utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { ElementStates } from "../../types/element-states";
 
 export const StringComponent: React.FC = () => {
   const [arr, setArr] = useState<Array<{ value: string, id: number, state: ElementStates }>>([])

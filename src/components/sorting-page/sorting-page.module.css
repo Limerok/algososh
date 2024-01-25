@@ -10,9 +10,11 @@
 .flex {
   display: flex;
 }
+
 .radio {
   margin-right: 40px;
 }
+
 .button {
   margin-right: 12px;
 }

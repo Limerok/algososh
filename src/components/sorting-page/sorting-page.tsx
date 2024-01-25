@@ -4,15 +4,31 @@ import styles from './sorting-page.module.css';
 import { RadioInput } from "../ui/radio-input/radio-input";
 import { Button } from "../ui/button/button";
 import { Column } from "../ui/column/column";
-import { Direction } from "../../types/direction";
 import { SortOrderType, SortTypes } from "../../types/sort-types";
-import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { sleep, swap } from "../../utils/utils";
+import { ElementStates } from "../../types/element-states";
+import { Direction } from "../../types/direction";
 
 export const SortingPage: React.FC = () => {
-  const [arr, setArr] = useState<Array<{ number: number, id: number, state: ElementStates }>>([])
-  const [sortType, setSortType] = useState<SortTypes>(SortTypes.Select)
+  const [arr, setArr] = useState<Array<{ number: number, id: number, state: ElementStates }>>([]);
+  const [sortType, setSortType] = useState<SortTypes>(SortTypes.Select);
+  const [buttonsState, setButtonsState] = useState<{ [buttonName: string]: { isLoader: boolean, disabled: boolean } }>
+    (
+      {
+        decrease: { isLoader: false, disabled: false },
+        increase: { isLoader: false, disabled: false },
+        newArrButton: { isLoader: false, disabled: false }
+      }
+    )
+
+  const setButtonsDefault = () => {
+    setButtonsState({
+      decrease: { isLoader: false, disabled: false },
+      increase: { isLoader: false, disabled: false },
+      newArrButton: { isLoader: false, disabled: false }
+    })
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'select') {
@@ -37,7 +53,7 @@ export const SortingPage: React.FC = () => {
   }, [])
 
   const setDefault = () => {
-    arr.map((item) => { item.state = ElementStates.Default })
+    arr.map(item => item.state = ElementStates.Default)
   }
 
   const compare = (a: number, b: number, type: SortOrderType): boolean => {
@@ -74,6 +90,7 @@ export const SortingPage: React.FC = () => {
     }
     tempArr[length - 1].state = ElementStates.Modified
     setArr([...tempArr]);
+    setButtonsDefault()
   };
 
   const bubbleSort = async (type: SortOrderType) => {
@@ -97,9 +114,15 @@ export const SortingPage: React.FC = () => {
     }
     tempArr[0].state = ElementStates.Modified
     setArr([...tempArr])
+    setButtonsDefault()
   }
 
   const sortIncrease = () => {
+    setButtonsState({
+      decrease: { isLoader: false, disabled: true },
+      increase: { isLoader: true, disabled: true },
+      newArrButton: { isLoader: false, disabled: true }
+    })
     if (sortType === SortTypes.Bubble) {
       bubbleSort(SortOrderType.Increase)
     } else {
@@ -108,6 +131,11 @@ export const SortingPage: React.FC = () => {
   }
 
   const sortDecrease = () => {
+    setButtonsState({
+      decrease: { isLoader: true, disabled: true },
+      increase: { isLoader: false, disabled: true },
+      newArrButton: { isLoader: false, disabled: true }
+    })
     if (sortType === SortTypes.Bubble) {
       bubbleSort(SortOrderType.Decrease)
     } else {
@@ -119,14 +147,42 @@ export const SortingPage: React.FC = () => {
     <SolutionLayout title="Сортировка массива">
       <div className={styles.main}>
         <div className={styles.flex}>
-          <RadioInput name="select" extraClass={styles.radio} label="Выбор" onChange={handleChange} checked={sortType === SortTypes.Select} />
-          <RadioInput name="bubble" label="Пузырёк" onChange={handleChange} checked={sortType === SortTypes.Bubble} />
+          <RadioInput
+            name="select"
+            extraClass={styles.radio}
+            label="Выбор"
+            onChange={handleChange}
+            checked={sortType === SortTypes.Select}
+          />
+          <RadioInput
+            name="bubble"
+            label="Пузырёк"
+            onChange={handleChange}
+            checked={sortType === SortTypes.Bubble}
+          />
         </div>
         <div className={styles.flex}>
-          <Button extraClass={styles.button} text='По возрастанию' sorting={Direction.Ascending} onClick={sortIncrease} />
-          <Button text='По убыванию' sorting={Direction.Descending} onClick={sortDecrease} />
+          <Button
+            extraClass={styles.button}
+            text='По возрастанию'
+            sorting={Direction.Ascending}
+            onClick={sortIncrease}
+            isLoader={buttonsState['increase'].isLoader}
+            disabled={buttonsState['increase'].disabled}
+          />
+          <Button
+            isLoader={buttonsState['decrease'].isLoader}
+            disabled={buttonsState['decrease'].disabled}
+            text='По убыванию' sorting={Direction.Descending}
+            onClick={sortDecrease}
+          />
         </div>
-        <Button text='Новый массив' onClick={generateRandomArr} />
+        <Button
+          isLoader={buttonsState['newArrButton'].isLoader}
+          disabled={buttonsState['newArrButton'].disabled}
+          text='Новый массив'
+          onClick={generateRandomArr}
+        />
       </div>
       <div className={styles.diagram}>
         {arr.map((item) =>

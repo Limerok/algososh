@@ -24,7 +24,6 @@ export class Queue<T> implements IQueue<T> {
     this.container[this.tail] = item;
     this.tail++;
     this.length++;
-    console.log(`enqueue ${this.container} head: ${this.head} tail: ${this.tail}`)
   };
 
   dequeue = () => {
@@ -35,7 +34,6 @@ export class Queue<T> implements IQueue<T> {
     this.container[this.head] = null
     this.head++;
     this.length--;
-    console.log(`dequeue ${this.container} head: ${this.head} tail: ${this.tail}`)
   };
 
   peak = (): T | null => {
@@ -49,9 +47,15 @@ export class Queue<T> implements IQueue<T> {
     }
   };
 
+  clear = () => {
+    this.container = Array(this.size).fill(null);
+    this.head = 0
+    this.tail = 0
+  }
+
   getElements = (): (T | null)[] => this.container;
 
-  isEmpty = () => this.length === 0;
+  isEmpty = () => this.container.filter(item => item !== null).length === 0;
 
   getHead = () => this.head % this.size
 

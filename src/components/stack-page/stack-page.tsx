@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import styles from './stack-page.module.css'
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
-import { Stack } from "./stack";
+import { Stack } from "./class-stack";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
-import { ElementStates } from "../../types/element-states";
 import { nanoid } from "nanoid";
 import { sleep } from "../../utils/utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { Circle } from "../ui/circle/circle";
+import { useForm } from "../../hooks/useForm";
+import { ElementStates } from "../../types/element-states";
 
 type TStackElement = {
   value: string;
@@ -18,16 +19,39 @@ type TStackElement = {
 }
 
 export const StackPage: React.FC = () => {
-  const [input, setInput] = useState<string>('');
   const [stack, setStack] = useState<Stack<TStackElement>>(new Stack<TStackElement>());
   const [shouldUpdate, setShouldUpdate] = useState<boolean>(false)
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
+  const [buttonsState, setButtonsState] = useState<{ [buttonName: string]: { isLoader: boolean, disabled: boolean } }>
+    (
+      {
+        addElement: { isLoader: false, disabled: false },
+        deleteElement: { isLoader: false, disabled: false },
+        clear: { isLoader: false, disabled: false }
+      }
+    )
+
+  const { values, handleChange, setValues } = useForm({
+    input: ''
+  });
+
+  const maxLenght = 4;
+
+  const setButtonsDefault = () => {
+    setButtonsState({
+      addElement: { isLoader: false, disabled: false },
+      deleteElement: { isLoader: false, disabled: false },
+      clear: { isLoader: false, disabled: false }
+    })
+  }
 
   const addElement = async () => {
-    const newElement: TStackElement = { value: input, id: nanoid(), index: stack.getSize(), state: ElementStates.Changing }
+    setButtonsState({
+      addElement: { isLoader: true, disabled: true },
+      deleteElement: { isLoader: false, disabled: true },
+      clear: { isLoader: false, disabled: true }
+    })
+    const newElement: TStackElement = { value: values.input, id: nanoid(), index: stack.getSize(), state: ElementStates.Changing }
     stack.push(newElement)
     await sleep(SHORT_DELAY_IN_MS)
     setShouldUpdate(!shouldUpdate)
@@ -35,10 +59,18 @@ export const StackPage: React.FC = () => {
     stack.pop()
     newElement.state = ElementStates.Default
     stack.push(newElement)
-    setInput('')
+    setValues({
+      input: ''
+    })
+    setButtonsDefault()
   }
 
   const deleteElement = async () => {
+    setButtonsState({
+      addElement: { isLoader: false, disabled: true },
+      deleteElement: { isLoader: true, disabled: true },
+      clear: { isLoader: false, disabled: true }
+    })
     let lastElement = stack.peak();
     if (lastElement !== null) {
       lastElement.state = ElementStates.Changing;
@@ -50,6 +82,7 @@ export const StackPage: React.FC = () => {
       stack.pop();
       setStack(stack)
       setShouldUpdate(!setShouldUpdate)
+      setButtonsDefault()
     }
   }
 
@@ -62,11 +95,35 @@ export const StackPage: React.FC = () => {
     <SolutionLayout title="Стек">
       <div className={styles.main}>
         <div className={styles.stack}>
-          <Input value={input} extraClass={styles.input} type='text' isLimitText={true} maxLength={4} onChange={onChange} />
-          <Button text='Добавить' onClick={addElement} disabled={input === '' ? true : false} />
-          <Button text='Удалить' onClick={deleteElement} disabled={stack.getElements().length === 0 ? true : false} />
+          <Input
+            name='input'
+            value={values.input}
+            extraClass={styles.input}
+            type='text'
+            isLimitText={true}
+            maxLength={maxLenght}
+            onChange={handleChange}
+          />
+          <Button
+            text='Добавить'
+            onClick={addElement}
+            disabled={values.input === '' || buttonsState.addElement.disabled}
+            isLoader={buttonsState.addElement.isLoader}
+          />
+          <Button
+            text='Удалить'
+            onClick={deleteElement}
+            disabled={stack.getElements().length === 0 || buttonsState.deleteElement.disabled}
+            isLoader={buttonsState.deleteElement.isLoader}
+
+          />
         </div>
-        <Button text='Очистить' onClick={clear} disabled={stack.getElements().length === 0 ? true : false} />
+        <Button
+          text='Очистить'
+          onClick={clear}
+          disabled={stack.getElements().length === 0 || buttonsState.clear.disabled}
+          isLoader={buttonsState.clear.isLoader}
+        />
       </div>
       <div className={styles.elements}>
         {stack.getElements().map((item) => <Circle head={item.id === (stack.peak() as TStackElement).id ? 'top' : ''} key={item.id} state={item.state} letter={item.value} index={item.index} />)}
