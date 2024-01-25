@@ -1,0 +1,15 @@
+.main {
+  margin: auto;
+  width: 829px;
+  display: flex;
+  gap: 80px
+}
+
+.stack {
+  display: flex;
+  gap: 12px
+}
+
+.input {
+  width: 345px;
+}
