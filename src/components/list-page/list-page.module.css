@@ -1,0 +1,27 @@
+.main {
+  width: 952px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: auto;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  gap: 12px;
+}
+
+.input {
+  width: 204px;
+}
+
+.buttonsValue {
+  width: 175px;
+  font-size: 15px;
+}
+
+.buttonsIndex {
+  width: 362px;
+  font-size: 15px;
+}

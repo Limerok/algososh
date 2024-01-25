@@ -24,5 +24,11 @@ export class Stack<T> implements IStack<T> {
     }
   };
 
+  clear = (): void => {
+    this.container = []
+  }
+
+  getElements = (): T[] => this.container;
+
   getSize = () => this.container.length;
 }
