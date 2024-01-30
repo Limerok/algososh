@@ -62,6 +62,11 @@ export const QueuePage: React.FC = () => {
       input: ''
     })
     setButtonsDefault()
+
+    console.log(queue)
+    console.log(`headIndex ${headIndex}`)
+    console.log(`tailIndex ${tailIndex}`)
+    console.log(queue.getLength())
   }
 
   const dequeue = async () => {
@@ -93,6 +98,7 @@ export const QueuePage: React.FC = () => {
 
   return (
     <SolutionLayout title="Очередь">
+
       <div className={styles.main}>
         <div className={styles.stack}>
           <Input
@@ -107,7 +113,7 @@ export const QueuePage: React.FC = () => {
           <Button
             text='Добавить'
             onClick={enqueue}
-            disabled={values.input === '' || buttonsState.addElement.disabled}
+            disabled={values.input === '' || buttonsState.addElement.disabled || queue.getLength() === 7}
             isLoader={buttonsState.addElement.isLoader}
           />
           <Button

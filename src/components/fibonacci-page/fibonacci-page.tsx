@@ -55,7 +55,7 @@ export const FibonacciPage: React.FC = () => {
           text="Рассчитать"
           onClick={calculate}
           isLoader={buttonPressed}
-          disabled={values.input === '' || !/^\d+$/.test(values.input) || +values.input > 19}
+          disabled={values.input === '' || !/^\d+$/.test(values.input) || +values.input > 19 || +values.input < 1}
         />
       </div>
       <div className={styles.letters}>
