@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Kнопкa с индикацией загрузки рендерится без ошибок 1`] = `
+exports[`The button with load indication is rendered without errors 1`] = `
 <button
   className="text text_type_button text_color_primary button undefined loader "
   disabled={true}
@@ -14,19 +14,7 @@ exports[`Kнопкa с индикацией загрузки рендеритс�
 </button>
 `;
 
-exports[`Заблокированная кнопка рендерится без ошибок 1`] = `
-<button
-  className="text text_type_button text_color_primary button undefined false "
-  disabled={true}
-  type="button"
->
-  <p
-    className="text undefined"
-  />
-</button>
-`;
-
-exports[`Кнопка c текстом рендерится без ошибок 1`] = `
+exports[`The button with text is rendered without errors 1`] = `
 <button
   className="text text_type_button text_color_primary button undefined false "
   type="button"
@@ -39,9 +27,21 @@ exports[`Кнопка c текстом рендерится без ошибок 
 </button>
 `;
 
-exports[`Кнопка без текста рендерится без ошибок 1`] = `
+exports[`The button without text is rendered without errors 1`] = `
 <button
   className="text text_type_button text_color_primary button undefined false "
+  type="button"
+>
+  <p
+    className="text undefined"
+  />
+</button>
+`;
+
+exports[`The locked button is rendered without errors 1`] = `
+<button
+  className="text text_type_button text_color_primary button undefined false "
+  disabled={true}
   type="button"
 >
   <p
