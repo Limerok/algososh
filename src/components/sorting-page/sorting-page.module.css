@@ -1,0 +1,31 @@
+.main {
+  margin: auto;
+  align-items: center;
+  display: flex;
+  width: 924px;
+  justify-content: space-between;
+  margin-bottom: 5%;
+}
+
+.flex {
+  display: flex;
+}
+
+.radio {
+  margin-right: 40px;
+}
+
+.button {
+  margin-right: 12px;
+}
+
+.diagram {
+  height: 340px;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  max-width: 986px;
+  align-items: end;
+  gap: 10px
+
+}

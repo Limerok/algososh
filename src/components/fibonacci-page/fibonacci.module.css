@@ -1,0 +1,21 @@
+.main {
+  margin: auto;
+  display: flex;
+  max-width: 522px;
+  margin-bottom: 48px;
+}
+
+.mr {
+  margin-right: 12px;
+}
+
+.letters {
+  max-width: 960px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 50px;
+
+}
