@@ -1,6 +1,5 @@
 import { Circle } from "./circle";
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
 import renderer from "react-test-renderer";
 import { ElementStates } from "../../../types/element-states";
 

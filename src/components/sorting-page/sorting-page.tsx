@@ -10,7 +10,11 @@ import { sleep, swap } from "../../utils/utils";
 import { ElementStates } from "../../types/element-states";
 import { Direction } from "../../types/direction";
 
-export const SortingPage: React.FC = () => {
+interface ISortingProps {
+  arrLength?: number
+}
+
+export const SortingPage: React.FC<ISortingProps> = ({ arrLength }: ISortingProps) => {
   const [arr, setArr] = useState<Array<{ number: number, id: number, state: ElementStates }>>([]);
   const [sortType, setSortType] = useState<SortTypes>(SortTypes.Select);
   const [buttonsState, setButtonsState] = useState<{ [buttonName: string]: { isLoader: boolean, disabled: boolean } }>
@@ -42,14 +46,21 @@ export const SortingPage: React.FC = () => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   const generateRandomArr = () => {
-    let arr = Array.from({ length: randomInteger(3, 17) }, () => Math.floor(Math.random() * 100))
+    let arr = Array.from({ length: randomInteger(arrLength ?? 3, arrLength ?? 17) }, () => Math.floor(Math.random() * 100))
     setArr(arr.map((number, index) => {
       return { id: index + 1, number: number, state: ElementStates.Default }
     }))
   }
 
   useEffect(() => {
-    generateRandomArr()
+    if (arrLength === 0) {
+      setArr([])
+    } else if (arrLength === 1) {
+      const randonNumber = Math.random();
+      setArr([{ number: randonNumber, id: 1, state: ElementStates.Default }])
+    } else {
+      generateRandomArr()
+    }
   }, [])
 
   const setDefault = () => {
@@ -163,6 +174,7 @@ export const SortingPage: React.FC = () => {
         </div>
         <div className={styles.flex}>
           <Button
+            data-testid='button_ascending'
             extraClass={styles.button}
             text='По возрастанию'
             sorting={Direction.Ascending}
@@ -171,6 +183,7 @@ export const SortingPage: React.FC = () => {
             disabled={buttonsState['increase'].disabled}
           />
           <Button
+            data-testid='button_descending'
             isLoader={buttonsState['decrease'].isLoader}
             disabled={buttonsState['decrease'].disabled}
             text='По убыванию' sorting={Direction.Descending}
@@ -184,9 +197,12 @@ export const SortingPage: React.FC = () => {
           onClick={generateRandomArr}
         />
       </div>
-      <div className={styles.diagram}>
+      <div data-testid='array-container' className={styles.diagram}>
         {arr.map((item) =>
-          <Column index={item.number} key={item.id} state={item.state} />)
+          <div data-testid='column' key={item.id}>
+            <Column index={item.number} key={item.id} state={item.state} />
+          </div>
+        )
         }
       </div>
     </SolutionLayout>
