@@ -1,0 +1,1 @@
+export const urlTest = 'http://localhost:3000';
