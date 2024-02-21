@@ -1,6 +1,6 @@
 import { urlTest } from '../../src/constants/testConstants';
 
-describe('stack works correctly', function () {
+describe('queue works correctly', function () {
   beforeEach(function () {
     cy.visit(urlTest);
     cy.get('[data-cy="queuePage"]').click();
