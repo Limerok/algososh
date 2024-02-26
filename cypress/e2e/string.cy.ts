@@ -1,4 +1,4 @@
-import { urlTest } from '../../src/constants/testConstants';
+import { changingColor, modifiedColor, urlTest } from '../../src/constants/testConstants';
 
 describe('string works correctly', function () {
   beforeEach(function () {
@@ -19,21 +19,21 @@ describe('string works correctly', function () {
     for (let i = 0; i < text.length / 2; i++) {
       cy.get('div[class*="circle_circle"]')
         .eq(i)
-        .should('have.css', 'border-color', 'rgb(210, 82, 225)')
+        .should('have.css', 'border-color', changingColor)
 
       cy.get('div[class*="circle_circle"]')
         .eq(text.length - 1 - i)
-        .should('have.css', 'border-color', 'rgb(210, 82, 225)')
+        .should('have.css', 'border-color', changingColor)
 
       cy.wait(100);
 
       cy.get('div[class*="circle_circle"]')
         .eq(i)
-        .should('have.css', 'border-color', 'rgb(127, 224, 81)')
+        .should('have.css', 'border-color', modifiedColor)
 
       cy.get('div[class*="circle_circle"]')
         .eq(text.length - 1 - i)
-        .should('have.css', 'border-color', 'rgb(127, 224, 81)')
+        .should('have.css', 'border-color', modifiedColor)
     }
   });
 

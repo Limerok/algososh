@@ -1,3 +1,4 @@
+import { defaultColor, changingColor } from '../../src/constants/testConstants';
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -25,13 +26,42 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      addStackNode(text: string): Chainable<void>
+      addQueueNode(text: string, position: number): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add("addStackNode", (text: string) => {
+  cy.get('[data-testid="input"]').type(text);
+  cy.get('[data-testid="add__button"]').should('not.be.disabled').click();
+  cy.get('div[class*="circle_circle"]')
+    .last()
+    .should('have.text', text)
+    .should('have.css', 'border-color', changingColor)
+
+  cy.wait(100);
+
+  cy.get('div[class*="circle_circle"]')
+    .last()
+    .should('have.text', text)
+    .should('have.css', 'border-color', defaultColor)
+})
+
+Cypress.Commands.add("addQueueNode", (text: string, position: number) => {
+  cy.get('[data-testid="input"]').type(text)
+  cy.get('[data-testid="add__button"]').should('not.be.disabled').click()
+  cy.get('div[class*="circle_circle"]')
+    .eq(position)
+    .should('have.css', 'border-color', changingColor)
+
+  cy.wait(100);
+
+  cy.get('div[class*="circle_circle"]')
+    .eq(position)
+    .should('have.css', 'border-color', defaultColor)
+    .should('have.text', text)
+})

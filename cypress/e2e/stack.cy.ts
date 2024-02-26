@@ -1,4 +1,4 @@
-import { urlTest } from '../../src/constants/testConstants';
+import { changingColor, urlTest } from '../../src/constants/testConstants';
 
 describe('stack works correctly', function () {
   beforeEach(function () {
@@ -14,38 +14,14 @@ describe('stack works correctly', function () {
 
   it('element adds correctly', function () {
     const text = '4';
-    cy.get('[data-testid="input"]').type(text)
-    cy.get('[data-testid="add__button"]').should('not.be.disabled').click()
-    cy.get('div[class*="circle_circle"]')
-      .eq(0)
-      .should('have.text', '4')
-      .should('have.css', 'border-color', 'rgb(210, 82, 225)')
-
-    cy.wait(100);
-
-    cy.get('div[class*="circle_circle"]')
-      .eq(0)
-      .should('have.text', '4')
-      .should('have.css', 'border-color', 'rgb(0, 50, 255)')
+    cy.addStackNode(text)
 
     cy.get('div[class*="circle_head"]')
       .eq(0)
       .contains('top')
 
     const newtext = '1';
-    cy.get('[data-testid="input"]').type(newtext)
-    cy.get('[data-testid="add__button"]').should('not.be.disabled').click()
-    cy.get('div[class*="circle_circle"]')
-      .eq(1)
-      .should('have.text', '1')
-      .should('have.css', 'border-color', 'rgb(210, 82, 225)')
-
-    cy.wait(100);
-
-    cy.get('div[class*="circle_circle"]')
-      .eq(1)
-      .should('have.text', '1')
-      .should('have.css', 'border-color', 'rgb(0, 50, 255)')
+    cy.addStackNode(newtext)
 
     cy.get('div[class*="circle_head"]')
       .eq(0)
@@ -59,38 +35,14 @@ describe('stack works correctly', function () {
 
   it('element delete correctly', function () {
     const text = '4';
-    cy.get('[data-testid="input"]').type(text)
-    cy.get('[data-testid="add__button"]').should('not.be.disabled').click()
-    cy.get('div[class*="circle_circle"]')
-      .eq(0)
-      .should('have.text', '4')
-      .should('have.css', 'border-color', 'rgb(210, 82, 225)')
-
-    cy.wait(100);
-
-    cy.get('div[class*="circle_circle"]')
-      .eq(0)
-      .should('have.text', '4')
-      .should('have.css', 'border-color', 'rgb(0, 50, 255)')
+    cy.addStackNode(text)
 
     cy.get('div[class*="circle_head"]')
       .eq(0)
       .contains('top')
 
     const newtext = '1';
-    cy.get('[data-testid="input"]').type(newtext)
-    cy.get('[data-testid="add__button"]').should('not.be.disabled').click()
-    cy.get('div[class*="circle_circle"]')
-      .eq(1)
-      .should('have.text', '1')
-      .should('have.css', 'border-color', 'rgb(210, 82, 225)')
-
-    cy.wait(100);
-
-    cy.get('div[class*="circle_circle"]')
-      .eq(1)
-      .should('have.text', '1')
-      .should('have.css', 'border-color', 'rgb(0, 50, 255)')
+    cy.addStackNode(newtext)
 
     cy.get('div[class*="circle_head"]')
       .eq(0)
@@ -104,8 +56,8 @@ describe('stack works correctly', function () {
     cy.get('[data-testid="delete__button"]').should('not.be.disabled').click()
     cy.get('div[class*="circle_circle"]')
       .eq(1)
-      .should('have.text', '1')
-      .should('have.css', 'border-color', 'rgb(210, 82, 225)')
+      .should('have.text', newtext)
+      .should('have.css', 'border-color', changingColor)
 
     cy.get('div[class*="circle_circle"]')
       .eq(1)
@@ -117,42 +69,16 @@ describe('stack works correctly', function () {
       .contains('top')
   })
 
-
-
   it('cleaning works correctly', function () {
     const text = '4';
-    cy.get('[data-testid="input"]').type(text)
-    cy.get('[data-testid="add__button"]').should('not.be.disabled').click()
-    cy.get('div[class*="circle_circle"]')
-      .eq(0)
-      .should('have.text', '4')
-      .should('have.css', 'border-color', 'rgb(210, 82, 225)')
-
-    cy.wait(100);
-
-    cy.get('div[class*="circle_circle"]')
-      .eq(0)
-      .should('have.text', '4')
-      .should('have.css', 'border-color', 'rgb(0, 50, 255)')
+    cy.addStackNode(text)
 
     cy.get('div[class*="circle_head"]')
       .eq(0)
       .contains('top')
 
     const newtext = '1';
-    cy.get('[data-testid="input"]').type(newtext)
-    cy.get('[data-testid="add__button"]').should('not.be.disabled').click()
-    cy.get('div[class*="circle_circle"]')
-      .eq(1)
-      .should('have.text', '1')
-      .should('have.css', 'border-color', 'rgb(210, 82, 225)')
-
-    cy.wait(100);
-
-    cy.get('div[class*="circle_circle"]')
-      .eq(1)
-      .should('have.text', '1')
-      .should('have.css', 'border-color', 'rgb(0, 50, 255)')
+    cy.addStackNode(newtext)
 
     cy.get('div[class*="circle_head"]')
       .eq(0)
@@ -166,6 +92,5 @@ describe('stack works correctly', function () {
     cy.get('[data-testid="clean__button"]').should('not.be.disabled').click()
     cy.get('div[class*="circle"]')
       .should('not.exist')
-
   });
 })

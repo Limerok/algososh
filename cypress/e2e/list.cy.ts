@@ -1,4 +1,3 @@
-import { wait } from '@testing-library/user-event/dist/utils';
 import { urlTest } from '../../src/constants/testConstants';
 
 describe('list works correctly', function () {
@@ -30,7 +29,7 @@ describe('list works correctly', function () {
     cy.get('[data-testid="add-head__button"]').should('not.be.disabled').click()
     cy.get('div[class*="circle_circle"]')
       .eq(0)
-      .should('have.text', '4')
+      .should('have.text', text)
   });
 
   it('adding an element to the tail works correctly', function () {
@@ -39,7 +38,7 @@ describe('list works correctly', function () {
     cy.get('[data-testid="add-tail__button"]').should('not.be.disabled').click()
     cy.get('div[class*="circle_circle"]')
       .eq(6)
-      .should('have.text', '4')
+      .should('have.text', text)
   });
 
   it('adding an element by index works correctly', function () {
@@ -49,8 +48,8 @@ describe('list works correctly', function () {
     cy.get('[data-testid="input-index"]').type(textIndex)
     cy.get('[data-testid="add-byindex__button"]').should('not.be.disabled').click()
     cy.get('div[class*="circle_circle"]')
-      .eq(3)
-      .should('have.text', '4')
+      .eq(+textIndex)
+      .should('have.text', text)
   });
 
   it('removing an element from the head works correctly', function () {
@@ -79,13 +78,13 @@ describe('list works correctly', function () {
     const textIndex = '3'
     cy.get('[data-testid="input-index"]').type(textIndex)
     cy.get('div[class*="circle_circle"]')
-      .eq(3)
+      .eq(+textIndex)
       .then((circle) => {
         const text = circle.text()
         cy.get('[data-testid="delete-byindex__button"]').should('not.be.disabled').click()
         cy.wait(3000)
         cy.get('div[class*="circle_circle"]')
-          .eq(3)
+          .eq(+textIndex)
           .should('not.have.text', text)
       })
 
