@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The button with load indication is rendered without errors 1`] = `
+<button
+  className="text text_type_button text_color_primary button  loader "
+  disabled={true}
+  type="button"
+>
+  <img
+    alt="Загрузка."
+    className="loader_icon"
+    src="loader.svg"
+  />
+</button>
+`;
+
+exports[`The button with text is rendered without errors 1`] = `
+<button
+  className="text text_type_button text_color_primary button  false "
+  type="button"
+>
+  <p
+    className="text undefined"
+  >
+    test
+  </p>
+</button>
+`;
+
+exports[`The button without text is rendered without errors 1`] = `
+<button
+  className="text text_type_button text_color_primary button  false "
+  type="button"
+>
+  <p
+    className="text undefined"
+  >
+    
+  </p>
+</button>
+`;
+
+exports[`The locked button is rendered without errors 1`] = `
+<button
+  className="text text_type_button text_color_primary button  false "
+  disabled={true}
+  type="button"
+>
+  <p
+    className="text undefined"
+  >
+    test
+  </p>
+</button>
+`;

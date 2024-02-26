@@ -1,4 +1,5 @@
-import { changingColor, urlTest } from '../../src/constants/testConstants';
+import { circleClass, circleHead, circleTail, circles, urlTest } from '../../src/constants/testConstants';
+import { changingColor } from '../../src/constants/testConstants';
 
 describe('stack works correctly', function () {
   beforeEach(function () {
@@ -16,19 +17,21 @@ describe('stack works correctly', function () {
     const text = '4';
     cy.addStackNode(text)
 
-    cy.get('div[class*="circle_head"]')
+    cy.get(circleHead).as('circleHead')
+
+    cy.get('@circleHead')
       .eq(0)
       .contains('top')
 
     const newtext = '1';
     cy.addStackNode(newtext)
 
-    cy.get('div[class*="circle_head"]')
+    cy.get('@circleHead')
       .eq(0)
       .contains('top')
       .should('not.exist')
 
-    cy.get('div[class*="circle_head"]')
+    cy.get('@circleHead')
       .eq(1)
       .contains('top')
   });
@@ -37,34 +40,37 @@ describe('stack works correctly', function () {
     const text = '4';
     cy.addStackNode(text)
 
-    cy.get('div[class*="circle_head"]')
+    cy.get(circleHead).as('circleHead')
+    cy.get(circleClass).as('circle')
+
+    cy.get('@circleHead')
       .eq(0)
       .contains('top')
 
     const newtext = '1';
     cy.addStackNode(newtext)
 
-    cy.get('div[class*="circle_head"]')
+    cy.get('@circleHead')
       .eq(0)
       .contains('top')
       .should('not.exist')
 
-    cy.get('div[class*="circle_head"]')
+    cy.get('@circleHead')
       .eq(1)
       .contains('top')
 
     cy.get('[data-testid="delete__button"]').should('not.be.disabled').click()
-    cy.get('div[class*="circle_circle"]')
+    cy.get('@circle')
       .eq(1)
       .should('have.text', newtext)
       .should('have.css', 'border-color', changingColor)
 
-    cy.get('div[class*="circle_circle"]')
+    cy.get('@circle')
       .eq(1)
       .should('not.exist')
 
 
-    cy.get('div[class*="circle_head"]')
+    cy.get('@circleHead')
       .eq(0)
       .contains('top')
   })
@@ -73,24 +79,27 @@ describe('stack works correctly', function () {
     const text = '4';
     cy.addStackNode(text)
 
-    cy.get('div[class*="circle_head"]')
+    cy.get(circleHead).as('circleHead')
+    cy.get(circles).as('circles')
+
+    cy.get('@circleHead')
       .eq(0)
       .contains('top')
 
     const newtext = '1';
     cy.addStackNode(newtext)
 
-    cy.get('div[class*="circle_head"]')
+    cy.get('@circleHead')
       .eq(0)
       .contains('top')
       .should('not.exist')
 
-    cy.get('div[class*="circle_head"]')
+    cy.get('@circleHead')
       .eq(1)
       .contains('top')
 
     cy.get('[data-testid="clean__button"]').should('not.be.disabled').click()
-    cy.get('div[class*="circle"]')
+    cy.get('@circles')
       .should('not.exist')
   });
 })
