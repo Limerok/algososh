@@ -8,3 +8,6 @@ export const circleClass = 'div[class*="circle_circle"]';
 export const circleHead = 'div[class*="circle_head"]';
 export const circleTail = 'div[class*="circle_tail"]';
 export const circles = 'div[class*="circle"]';
+
+export const dataTestidInput = '[data-testid="input"]';
+export const dataTestidAddbutton = '[data-testid="add__button"]';

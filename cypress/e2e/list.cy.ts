@@ -1,16 +1,16 @@
-import { circleClass, urlTest } from '../../src/constants/testConstants';
+import { circleClass, dataTestidInput, urlTest } from '../../src/constants/testConstants';
 
 describe('list works correctly', function () {
   beforeEach(function () {
     cy.visit(urlTest);
     cy.get('[data-cy="listPage"]').click();
-    cy.get('[data-testid="input"]').clear()
+    cy.get(dataTestidInput).clear()
 
     cy.get(circleClass).as('circle')
   });
 
   it('button is locked when the input is empty', function () {
-    cy.get('[data-testid="input"]').should('contain', '')
+    cy.get(dataTestidInput).should('contain', '')
     cy.get('[data-testid="add-tail__button"]').should('be.disabled')
     cy.get('[data-testid="add-head__button"]').should('be.disabled')
     cy.get('[data-testid="add-byindex__button"]').should('be.disabled')
@@ -27,7 +27,7 @@ describe('list works correctly', function () {
 
   it('adding an element to the head works correctly', function () {
     const text = '4';
-    cy.get('[data-testid="input"]').type(text)
+    cy.get(dataTestidInput).type(text)
     cy.get('[data-testid="add-head__button"]').should('not.be.disabled').click()
     cy.get('@circle')
       .eq(0)
@@ -36,7 +36,7 @@ describe('list works correctly', function () {
 
   it('adding an element to the tail works correctly', function () {
     const text = '4';
-    cy.get('[data-testid="input"]').type(text)
+    cy.get(dataTestidInput).type(text)
     cy.get('[data-testid="add-tail__button"]').should('not.be.disabled').click()
     cy.get('@circle')
       .eq(6)
@@ -46,7 +46,7 @@ describe('list works correctly', function () {
   it('adding an element by index works correctly', function () {
     const text = '4';
     const textIndex = '3'
-    cy.get('[data-testid="input"]').type(text)
+    cy.get(dataTestidInput).type(text)
     cy.get('[data-testid="input-index"]').type(textIndex)
     cy.get('[data-testid="add-byindex__button"]').should('not.be.disabled').click()
     cy.get('@circle')

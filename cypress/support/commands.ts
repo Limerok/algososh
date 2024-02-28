@@ -1,4 +1,4 @@
-import { defaultColor, changingColor } from '../../src/constants/testConstants';
+import { defaultColor, changingColor, dataTestidInput, dataTestidAddbutton } from '../../src/constants/testConstants';
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -36,8 +36,8 @@ declare global {
 }
 
 Cypress.Commands.add("addStackNode", (text: string) => {
-  cy.get('[data-testid="input"]').type(text);
-  cy.get('[data-testid="add__button"]').should('not.be.disabled').click();
+  cy.get(dataTestidInput).type(text);
+  cy.get(dataTestidAddbutton).should('not.be.disabled').click();
   cy.get('div[class*="circle_circle"]')
     .last()
     .should('have.text', text)
@@ -52,8 +52,8 @@ Cypress.Commands.add("addStackNode", (text: string) => {
 })
 
 Cypress.Commands.add("addQueueNode", (text: string, position: number) => {
-  cy.get('[data-testid="input"]').type(text)
-  cy.get('[data-testid="add__button"]').should('not.be.disabled').click()
+  cy.get(dataTestidInput).type(text)
+  cy.get(dataTestidAddbutton).should('not.be.disabled').click()
   cy.get('div[class*="circle_circle"]')
     .eq(position)
     .should('have.css', 'border-color', changingColor)

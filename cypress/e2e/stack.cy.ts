@@ -1,16 +1,16 @@
-import { circleClass, circleHead, circleTail, circles, urlTest } from '../../src/constants/testConstants';
+import { circleClass, circleHead, circleTail, circles, dataTestidAddbutton, dataTestidInput, urlTest } from '../../src/constants/testConstants';
 import { changingColor } from '../../src/constants/testConstants';
 
 describe('stack works correctly', function () {
   beforeEach(function () {
     cy.visit(urlTest);
     cy.get('[data-cy="stackPage"]').click();
-    cy.get('[data-testid="input"]').clear()
+    cy.get(dataTestidInput).clear()
   });
 
   it('button is locked when the input is empty', function () {
-    cy.get('[data-testid="input"]').should('contain', '')
-    cy.get('[data-testid="add__button"]').should('be.disabled')
+    cy.get(dataTestidInput).should('contain', '')
+    cy.get(dataTestidAddbutton).should('be.disabled')
   });
 
   it('element adds correctly', function () {

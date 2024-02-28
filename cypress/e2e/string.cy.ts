@@ -1,21 +1,21 @@
-import { circleClass, urlTest } from '../../src/constants/testConstants';
+import { circleClass, dataTestidInput, urlTest } from '../../src/constants/testConstants';
 import { changingColor, modifiedColor } from '../../src/constants/testConstants';
 
 describe('string works correctly', function () {
   beforeEach(function () {
     cy.visit(urlTest);
     cy.get('[data-cy="stringComponent"]').click();
-    cy.get('[data-testid="input"]').clear()
+    cy.get(dataTestidInput).clear()
   });
 
   it('button is locked when the input is empty', function () {
-    cy.get('[data-testid="input"]').should('contain', '')
+    cy.get(dataTestidInput).should('contain', '')
     cy.get('[data-testid="reverse_button"]').should('be.disabled')
   });
 
   it('even length string reverse correctly', function () {
     const text = 'test'
-    cy.get('[data-testid="input"]').type(text)
+    cy.get(dataTestidInput).type(text)
     cy.get('[data-testid="reverse_button"]').should('not.be.disabled').click()
 
     cy.get(circleClass).as('circle')
@@ -43,7 +43,7 @@ describe('string works correctly', function () {
 
   it('odd length string reverse correctly', function () {
     const text = '12345'
-    cy.get('[data-testid="input"]').type(text)
+    cy.get(dataTestidInput).type(text)
     cy.get('[data-testid="reverse_button"]').should('not.be.disabled').click()
 
     cy.get(circleClass).as('circle')
@@ -77,7 +77,7 @@ describe('string works correctly', function () {
 
   it('single element string reverse correctly', function () {
     const text = '1'
-    cy.get('[data-testid="input"]').type(text)
+    cy.get(dataTestidInput).type(text)
     cy.get('[data-testid="reverse_button"]').should('not.be.disabled').click()
 
     cy.get(circleClass).as('circle')
