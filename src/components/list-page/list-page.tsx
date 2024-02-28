@@ -255,6 +255,7 @@ export const ListPage: React.FC = () => {
       <div className={styles.main}>
         <div className={styles.column}>
           <Input
+            data-testid="input"
             placeholder="Введите значение"
             name='valueInput'
             value={values.valueInput}
@@ -265,6 +266,7 @@ export const ListPage: React.FC = () => {
             disabled={buttonsState.valueInput.disabled}
           />
           <Button
+            data-testid="add-head__button"
             extraClass={styles.buttonsValue}
             onClick={addElementHead}
             text='Добавить в head'
@@ -272,6 +274,7 @@ export const ListPage: React.FC = () => {
             disabled={values.valueInput === '' || buttonsState.addHead.disabled}
           />
           <Button
+            data-testid="add-tail__button"
             extraClass={styles.buttonsValue}
             onClick={addElementTail}
             text='Добавить в tail'
@@ -279,6 +282,7 @@ export const ListPage: React.FC = () => {
             disabled={values.valueInput === '' || buttonsState.addTail.disabled}
           />
           <Button
+            data-testid="delete-head__button"
             extraClass={styles.buttonsValue}
             onClick={deleteElementHead}
             text='Удалить из head'
@@ -286,6 +290,7 @@ export const ListPage: React.FC = () => {
             disabled={buttonsState.deleteHead.disabled || linkedList.toArray().length === 0}
           />
           <Button
+            data-testid="delete-tail__button"
             extraClass={styles.buttonsValue}
             onClick={deleteElementTail}
             text='Удалить из tail'
@@ -295,6 +300,7 @@ export const ListPage: React.FC = () => {
         </div>
         <div className={styles.column}>
           <Input
+            data-testid="input-index"
             name='indexInput'
             placeholder="Введите индекс"
             value={values.indexInput}
@@ -304,6 +310,7 @@ export const ListPage: React.FC = () => {
             disabled={buttonsState.indexInput.disabled}
           />
           <Button
+            data-testid="add-byindex__button"
             extraClass={styles.buttonsIndex}
             onClick={addElementByIndex}
             isLoader={buttonsState.addAt.isLoader}
@@ -311,6 +318,7 @@ export const ListPage: React.FC = () => {
             text='Добавить по индексу'
           />
           <Button
+            data-testid="delete-byindex__button"
             extraClass={styles.buttonsIndex}
             onClick={deleteElementByIndex}
             isLoader={buttonsState.deleteAt.isLoader}
